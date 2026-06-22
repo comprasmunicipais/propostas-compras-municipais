@@ -68,7 +68,6 @@ export async function POST(request: Request) {
       method: "POST",
       headers: {
         apikey: serviceRoleKey,
-        Authorization: `Bearer ${serviceRoleKey}`,
         "Content-Type": "application/json",
         Prefer: "return=representation",
       },
