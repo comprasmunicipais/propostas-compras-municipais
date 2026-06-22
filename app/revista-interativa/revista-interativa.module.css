@@ -48,7 +48,9 @@
 .heroCopy,
 .priceCard,
 .card,
-.modal {
+.detailCard,
+.modal,
+.infoBox {
   border: 1px solid rgba(10, 78, 138, 0.12);
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.96);
@@ -62,18 +64,41 @@
 .title {
   margin: 18px 0 18px;
   max-width: 12ch;
-  font-size: clamp(2.6rem, 6vw, 4.9rem);
+  font-size: clamp(2.8rem, 6vw, 5rem);
   line-height: 0.95;
   letter-spacing: -0.05em;
   color: #0f172a;
 }
 
-.subtitle {
-  max-width: 40rem;
-  margin: 0 0 32px;
+.subtitle,
+.sectionBody,
+.bonusNote {
+  max-width: 48rem;
+  margin: 0;
   font-size: 1.05rem;
-  line-height: 1.7;
+  line-height: 1.72;
   color: #334155;
+}
+
+.heroHighlights {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 32px 0;
+}
+
+.heroHighlights span {
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  padding: 16px 18px;
+  border: 1px solid rgba(10, 78, 138, 0.12);
+  border-radius: 18px;
+  background: rgba(248, 251, 255, 0.9);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #0f172a;
 }
 
 .priceCard {
@@ -84,7 +109,8 @@
 }
 
 .priceLabel,
-.totalLabel {
+.totalLabel,
+.contactLabel {
   display: block;
   font-size: 0.78rem;
   font-weight: 700;
@@ -134,40 +160,119 @@
   padding: 34px 32px;
 }
 
+.sectionBlock {
+  margin-top: 28px;
+}
+
+.sectionIntro {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
 .sectionTitle {
   margin: 0;
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-size: clamp(1.5rem, 2.8vw, 2.15rem);
   line-height: 1.1;
   letter-spacing: -0.04em;
   color: #0f172a;
 }
 
-.featureList {
-  margin: 24px 0 0;
+.audienceSection {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 28px;
+  margin-top: 28px;
+}
+
+.audienceGrid {
+  margin: 0;
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
 }
 
-.featureList li {
-  position: relative;
-  padding-left: 20px;
-  font-size: 1rem;
-  line-height: 1.65;
+.audienceGrid li {
+  padding: 18px;
+  border: 1px solid rgba(10, 78, 138, 0.12);
+  border-radius: 18px;
+  background: rgba(248, 251, 255, 0.92);
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #0f172a;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.detailCard {
+  padding: 24px 22px;
+}
+
+.detailCard h3,
+.stepCard h3 {
+  margin: 0 0 12px;
+  font-size: 1.08rem;
+  line-height: 1.3;
+  color: #0f172a;
+}
+
+.detailCard p,
+.stepCard p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.68;
   color: #334155;
 }
 
-.featureList li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.72em;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: #d4a937;
-  transform: translateY(-50%);
+.bonusSection {
+  margin-top: 28px;
+  padding: 34px 32px;
+  border: 1px solid rgba(212, 169, 55, 0.22);
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(212, 169, 55, 0.11), rgba(212, 169, 55, 0.03)),
+    #ffffff;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+}
+
+.bonusHeader {
+  display: grid;
+  gap: 14px;
+}
+
+.bonusHighlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.bonusMetric {
+  min-height: 108px;
+  padding: 18px;
+  border: 1px solid rgba(10, 78, 138, 0.1);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+}
+
+.bonusMetric span {
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.45;
+  color: #0f172a;
+}
+
+.bonusNote {
+  margin-top: 22px;
 }
 
 .summaryCard {
@@ -176,7 +281,8 @@
     #ffffff;
 }
 
-.summaryList {
+.summaryList,
+.paymentList {
   margin: 26px 0 0;
   display: grid;
   gap: 18px;
@@ -205,12 +311,141 @@
   color: #0f172a;
 }
 
+.stepsSection,
+.summarySection {
+  margin-top: 28px;
+}
+
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.stepCard {
+  padding: 22px 18px;
+  border: 1px solid rgba(10, 78, 138, 0.12);
+  border-radius: 20px;
+  background: rgba(248, 251, 255, 0.9);
+}
+
+.stepNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+  background: #0a4e8a;
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.featureList {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 16px;
+}
+
+.featureList li,
+.infoList li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #334155;
+}
+
+.featureList li::before,
+.infoList li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #d4a937;
+  transform: translateY(-50%);
+}
+
+.investmentHighlight {
+  display: block;
+  margin-top: 18px;
+  font-size: clamp(1.8rem, 3.5vw, 2.45rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: #0a4e8a;
+}
+
+.summaryColumns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.contactCard {
+  padding: 22px;
+  border: 1px solid rgba(10, 78, 138, 0.12);
+  border-radius: 22px;
+  background: rgba(248, 251, 255, 0.92);
+  display: grid;
+  gap: 12px;
+}
+
+.contactLink {
+  color: #0a4e8a;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.55;
+  text-decoration: none;
+}
+
+.contactLink:hover {
+  text-decoration: underline;
+}
+
+.infoBox {
+  margin-top: 28px;
+  padding: 24px 26px;
+}
+
+.infoBox summary {
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0a4e8a;
+  list-style: none;
+}
+
+.infoBox summary::-webkit-details-marker {
+  display: none;
+}
+
+.infoList {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
 .formSection {
   margin-top: 28px;
   padding: 38px 32px 32px;
 }
 
 .formIntro {
+  display: grid;
+  gap: 14px;
   margin-bottom: 28px;
 }
 
@@ -371,9 +606,7 @@
 }
 
 .paymentList {
-  margin: 24px 0 0;
-  display: grid;
-  gap: 16px;
+  margin-top: 24px;
 }
 
 .modalHighlight {
@@ -390,33 +623,56 @@
   margin-top: 28px;
 }
 
+@media (max-width: 1080px) {
+  .hero,
+  .audienceSection,
+  .contentGrid,
+  .summaryColumns {
+    grid-template-columns: 1fr;
+  }
+
+  .cardGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stepsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bonusHighlights,
+  .audienceGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media (max-width: 960px) {
   .page {
     width: min(100% - 32px, 960px);
     padding-top: 28px;
   }
 
-  .hero,
-  .contentGrid,
-  .fieldGrid {
-    grid-template-columns: 1fr;
-  }
-
   .heroCopy,
   .priceCard,
   .card,
+  .detailCard,
+  .bonusSection,
   .formSection,
-  .modal {
+  .modal,
+  .infoBox {
     padding: 28px 22px;
     border-radius: 24px;
   }
 
-  .title {
-    max-width: 100%;
+  .fieldGrid {
+    grid-template-columns: 1fr;
   }
 
   .fullWidth {
     grid-column: auto;
+  }
+
+  .title {
+    max-width: 100%;
   }
 }
 
@@ -434,9 +690,21 @@
     letter-spacing: 0.2em;
   }
 
+  .heroHighlights,
+  .audienceGrid,
+  .cardGrid,
+  .bonusHighlights,
+  .stepsGrid {
+    grid-template-columns: 1fr;
+  }
+
   .subtitle,
+  .sectionBody,
+  .bonusNote,
+  .detailCard p,
+  .stepCard p,
   .featureList li,
-  .summaryList dd,
+  .infoList li,
   .modalText,
   .modalHighlight {
     font-size: 0.96rem;
