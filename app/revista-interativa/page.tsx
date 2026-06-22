@@ -5,6 +5,8 @@ import styles from "./revista-interativa.module.css";
 
 const PIX_KEY = "05.904.375/0001-08";
 const WHATSAPP_URL = "https://wa.me/551132807010";
+const ACCEPTANCE_ERROR_MESSAGE =
+  "N\u00e3o foi poss\u00edvel registrar o aceite. Tente novamente.";
 
 type FormValues = {
   empresa: string;
@@ -33,10 +35,15 @@ export default function RevistaInterativaPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const [values, setValues] = useState<FormValues>(initialValues);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [copyLabel, setCopyLabel] = useState("Copiar chave PIX");
 
   function updateField<K extends keyof FormValues>(field: K, value: FormValues[K]) {
     setValues((current) => ({ ...current, [field]: value }));
+    if (submitError) {
+      setSubmitError("");
+    }
   }
 
   async function handleCopyPix() {
@@ -48,7 +55,7 @@ export default function RevistaInterativaPage() {
     }
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const form = formRef.current;
@@ -59,8 +66,40 @@ export default function RevistaInterativaPage() {
       return;
     }
 
-    setCopyLabel("Copiar chave PIX");
-    setIsModalOpen(true);
+    setIsSubmitting(true);
+    setSubmitError("");
+
+    try {
+      const response = await fetch("/api/revista-interativa/acceptance", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          empresa: values.empresa,
+          cnpj: values.cnpj,
+          responsavel: values.responsavel,
+          cpf: values.cpf,
+          cargo: values.cargo,
+          whatsapp: values.whatsapp,
+          email: values.email,
+        }),
+      });
+
+      const payload = (await response.json()) as { success?: boolean };
+
+      if (!response.ok || !payload.success) {
+        setSubmitError(ACCEPTANCE_ERROR_MESSAGE);
+        return;
+      }
+
+      setCopyLabel("Copiar chave PIX");
+      setIsModalOpen(true);
+    } catch {
+      setSubmitError(ACCEPTANCE_ERROR_MESSAGE);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -221,8 +260,10 @@ export default function RevistaInterativaPage() {
                 </span>
               </label>
 
-              <button className={styles.primaryButton} type="submit">
-                ACEITAR PROPOSTA
+              {submitError ? <p className={styles.errorMessage}>{submitError}</p> : null}
+
+              <button className={styles.primaryButton} type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "ENVIANDO..." : "ACEITAR PROPOSTA"}
               </button>
             </form>
           </section>
