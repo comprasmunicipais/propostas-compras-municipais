@@ -252,7 +252,7 @@ test("masks CPF in internal email", () => {
   assert.doesNotMatch(message.html, /12345678909/u);
 });
 
-test("customer email omits CPF", () => {
+test("customer email includes PIX payment data and omits CPF", () => {
   const message = buildCustomerConfirmationMessage({
     ...validPayload,
     acceptanceId: "acceptance-6",
@@ -266,6 +266,26 @@ test("customer email omits CPF", () => {
   assert.doesNotMatch(message.html, /CPF/u);
   assert.doesNotMatch(message.text, /12345678909/u);
   assert.doesNotMatch(message.html, /12345678909/u);
+  assert.match(message.text, /Chave PIX — CNPJ: 05\.904\.375\/0001-08/u);
+  assert.match(message.html, /Chave PIX — CNPJ:<\/strong> 05\.904\.375\/0001-08/u);
+  assert.match(message.text, /Chave para copiar: 05904375000108/u);
+  assert.match(message.html, /Chave para copiar:<\/strong> 05904375000108/u);
+  assert.match(message.text, /Favorecido: D’AMICO EDITORA LTDA/u);
+  assert.match(message.html, /Favorecido:<\/strong> D’AMICO EDITORA LTDA/u);
+  assert.match(message.text, /Banco: Bradesco/u);
+  assert.match(message.html, /Banco:<\/strong> Bradesco/u);
+  assert.match(message.text, /Valor da primeira parcela: R\$ 500,00/u);
+  assert.match(message.html, /Valor da primeira parcela:<\/strong> R\$ 500,00/u);
+  assert.match(message.text, /\+55 11 3280-7010/u);
+  assert.match(message.html, /\+55 11 3280-7010/u);
+  assert.doesNotMatch(
+    message.text,
+    /Os dados para pagamento são apresentados após a confirmação do formulário\./u,
+  );
+  assert.doesNotMatch(
+    message.html,
+    /Os dados para pagamento são apresentados após a confirmação do formulário\./u,
+  );
 });
 
 test("mocks Nodemailer transport without real SMTP calls", async () => {
